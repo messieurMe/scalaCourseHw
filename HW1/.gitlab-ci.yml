@@ -1,0 +1,27 @@
+image: sbtscala/scala-sbt:eclipse-temurin-jammy-21.0.2_13_1.9.8_2.13.12
+
+stages:
+  - build
+  - test
+  - run
+
+variables:
+  SBT_OPTS: "-Xmx512m"
+
+before_script:
+  - sbt clean update
+
+build:
+  stage: build
+  script:
+    - sbt "scalafmtCheckAll; compile"
+
+test:
+  stage: test
+  script:
+    - sbt test
+
+run:
+  stage: run
+  script:
+    - sbt run
